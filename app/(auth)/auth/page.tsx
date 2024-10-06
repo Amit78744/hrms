@@ -16,8 +16,11 @@ const SignInPage = () => {
 		password: z.string().min(1, "Password is required"),
 	});
 
-	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+	const handleChange = (e: Event) => {
+		const target = e.target as HTMLInputElement | null;
+
+		if(target)
+			setFormData({ ...formData, [target.name]: target.value });
 	};
 
 	const handleSubmit = async(e: any) => {
