@@ -3,11 +3,12 @@ import { getCsrfToken, signIn } from "next-auth/react";
 import React, {useState} from 'react'
 import {useRouter} from 'next/navigation'
 import { z } from "zod";
+import { GetServerSidePropsContext } from 'next';
 
 const SignInPage = () => {
 	
 	const [formData, setFormData] = useState({ email: "", password: "" });
-  	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   	const [serverError, setServerError] = useState("");
 	const router = useRouter();
 
@@ -16,11 +17,8 @@ const SignInPage = () => {
 		password: z.string().min(1, "Password is required"),
 	});
 
-	const handleChange = (e: Event) => {
-		const target = e.target as HTMLInputElement | null;
-
-		if(target)
-			setFormData({ ...formData, [target.name]: target.value });
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = async(e: any) => {
@@ -30,7 +28,7 @@ const SignInPage = () => {
 
         if (!validationResult.success) {
 	      	
-	      	const fieldErrors = validationResult.error.errors.reduce((acc, curr) => {
+	      	const fieldErrors = validationResult.error.errors.reduce((acc: { [key: string]: string }, curr) => {
 	        	acc[curr.path[0]] = curr.message;
 	        	return acc;
 	      	}, {});
@@ -132,7 +130,7 @@ const SignInPage = () => {
 	);
 }
 
-SignInPage.getInitialProps = async (context) => {
+SignInPage.getInitialProps = async (context: GetServerSidePropsContext) => {
   return {
     csrfToken: await getCsrfToken(context),
   };

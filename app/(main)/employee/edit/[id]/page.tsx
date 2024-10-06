@@ -15,7 +15,7 @@ const EditEmployee = ({params} : {params : {id : string}}) => {
 	const [status, setStatus] = useState('');
 	const [address, setAddress] = useState('');
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<{ fullName?: string; email?: string; password?: string; cpassword?: string; phone?: string; status?: string; address?: string; }>({});
 	const [serverError, setServerError] = useState("");
 	const router = useRouter();
 
@@ -46,7 +46,7 @@ const EditEmployee = ({params} : {params : {id : string}}) => {
 
         if (!validationResult.success) {
 	      	
-	      	const fieldErrors = validationResult.error.errors.reduce((acc, curr) => {
+	      	const fieldErrors = validationResult.error.errors.reduce((acc: { [key: string]: string }, curr) => {
 	        	acc[curr.path[0]] = curr.message;
 	        	return acc;
 	      	}, {});

@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 const ChangePasswordPage = () => {
 	
 	const [formData, setFormData] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
-	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<{ oldPassword?: string; newPassword?: string; confirmPassword?: string }>({});
 	const [serverError, setServerError] = useState("");
 	const router = useRouter();
 
@@ -22,10 +22,10 @@ const ChangePasswordPage = () => {
       path: ["confirmPassword"],
   	});
 
-	const handleChange = (e) => {
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
-
+	
 	const handleSubmit = async(e: any) => {
 		e.preventDefault()
 		       
@@ -33,7 +33,7 @@ const ChangePasswordPage = () => {
 
         if (!validationResult.success) {
 	      	
-	      	const fieldErrors = validationResult.error.errors.reduce((acc, curr) => {
+	      	const fieldErrors = validationResult.error.errors.reduce((acc: { [key: string]: string }, curr) => {
 	        	acc[curr.path[0]] = curr.message;
 	        	return acc;
 	      	}, {});

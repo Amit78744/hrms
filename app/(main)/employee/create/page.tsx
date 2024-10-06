@@ -18,7 +18,7 @@ const CreateEmployee = () => {
 		address: ""
 	});
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<{ fullName?: string; email?: string; password?: string; cpassword?: string; phone?: string; status?: string; address?: string; }>({});
 	const [serverError, setServerError] = useState("");
 	const router = useRouter();
 
@@ -36,9 +36,10 @@ const CreateEmployee = () => {
       	path: ["cpassword"],
   	});
 
-  	const handleChange = (e) => {
+  	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
+	
 
 	const handleSubmit = async(e: any) => {
 		e.preventDefault()
@@ -48,7 +49,7 @@ const CreateEmployee = () => {
 
         if (!validationResult.success) {
 	      	
-	      	const fieldErrors = validationResult.error.errors.reduce((acc, curr) => {
+	      	const fieldErrors = validationResult.error.errors.reduce((acc: { [key: string]: string }, curr) => {
 	        	acc[curr.path[0]] = curr.message;
 	        	return acc;
 	      	}, {});
