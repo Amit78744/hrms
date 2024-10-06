@@ -1,0 +1,6 @@
+.auth-bg{ 
+	background-image: url('/assets/media/auth/bg4.jpg'); 
+}
+.errorMessage{
+	color: red;
+}

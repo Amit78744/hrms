@@ -1,0 +1,17 @@
+.app-header {
+	height: 65px !important;
+}
+
+.btn-check:active + .btn.btn-primary, .btn-check:checked + .btn.btn-primary, .btn.btn-primary.active, .btn.btn-primary.show, .btn.btn-primary:active:not(.btn-active), .btn.btn-primary:focus:not(.btn-active), .btn.btn-primary:hover:not(.btn-active), .show > .btn.btn-primary {
+  color: #FFFFFF;
+  border-color: #2884EF;
+  background-color: #2884EF !important;
+}
+
+.card .card-header {
+  min-height: 45px;
+}
+
+.errorMessage{
+  color: red;
+}
