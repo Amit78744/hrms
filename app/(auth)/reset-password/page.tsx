@@ -15,7 +15,7 @@ const ChangePasswordPage = () => {
 	const validationSchema = z.object({
 		oldPassword: z.string().min(1,"Old password is required"),
 		newPassword: z.string().min(1, "New password is required"),
-		confirmPassword: z.string().min(1, "Repeat password is required"),
+		confirmPassword: z.string().min(1, "Repeat password is required")
 
 	}).refine((data) => data.newPassword === data.confirmPassword, {
       message: "Passwords don't match",
@@ -25,7 +25,7 @@ const ChangePasswordPage = () => {
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
-	
+
 	const handleSubmit = async(e: any) => {
 		e.preventDefault()
 		       
