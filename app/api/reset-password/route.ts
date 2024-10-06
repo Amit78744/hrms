@@ -4,24 +4,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import bcrypt from "bcryptjs";
 
-type User = {
-    id: string; // or number, depending on your schema
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-};
-
-type Session = {
-    user: User;
-    // Include any other session properties you expect
-};
-
 // Action to create
 export const POST = async (req: NextRequest) => {
 	try {
-		const session = await getServerSession(authOptions) as Session;
+		const session = await getServerSession(authOptions);
   	const { oldPassword, newPassword } = await req.json();
-  	const userId = session.user?.id;
+  	const userId = session?.user?.id;
 
 		const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
 		const password = result.rows[0].password;
